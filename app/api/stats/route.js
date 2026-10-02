@@ -1,4 +1,5 @@
 import { db } from "../../lib/firebaseAdmin";
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
@@ -6,7 +7,14 @@ export async function GET() {
 
     const joined = doc.exists ? doc.data().joined || 0 : 0;
 
-    return Response.json({ joined });
+   return Response.json(
+  { joined },
+  {
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate",
+    },
+  }
+);
   } catch (error) {
     console.error("STATS ERROR:", error);
 
