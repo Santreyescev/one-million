@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
   const searchParams = useSearchParams();
 const [spotNumber, setSpotNumber] = useState(null);
 const shareCardRef = useRef(null);
+const storyCardRef = useRef(null);
+
 
 const shareUrl =
   typeof window !== "undefined" ? window.location.origin : "";
@@ -45,7 +47,9 @@ if (data.spotNumber) {
     confirmPayment();
   }, [searchParams]);
 const downloadShareCard = async () => {
-  if (!shareCardRef.current) return;
+  if (!shareCardRef.current) 
+  
+  return;
 
   const html2canvas = (await import("html2canvas")).default;
 
@@ -93,6 +97,22 @@ const shareCardImage = async () => {
       downloadShareCard();
     }
   }, "image/png");
+};
+
+const downloadStoryCard = async () => {
+  if (!storyCardRef.current) return;
+
+  const html2canvas = (await import("html2canvas")).default;
+
+  const canvas = await html2canvas(storyCardRef.current, {
+    backgroundColor: "#080808",
+    scale: 2,
+  });
+
+  const link = document.createElement("a");
+  link.download = `one-million-story-${spotNumber}.png`;
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 };
 
   return (
@@ -156,6 +176,8 @@ const shareCardImage = async () => {
     }}
   >
     SHARE YOUR SPOT
+</p>
+
 <div
   ref={shareCardRef}
   style={{
@@ -206,7 +228,89 @@ const shareCardImage = async () => {
     Can we reach one million people?
   </p>
 </div>
+
+<div
+  ref={storyCardRef}
+  style={{
+    position: "fixed",
+    left: "-9999px",
+    top: "0",
+    width: "540px",
+    height: "960px",
+    background: "#080808",
+    color: "white",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    padding: "60px",
+    boxSizing: "border-box",
+  }}
+>
+  <p
+    style={{
+      fontSize: "18px",
+      letterSpacing: "8px",
+      opacity: "0.7",
+      marginBottom: "60px",
+    }}
+  >
+    ONE MILLION
   </p>
+
+  <h2
+    style={{
+      fontSize: "72px",
+      marginBottom: "20px",
+      lineHeight: "1.1",
+    }}
+  >
+    I&apos;M #{spotNumber}
+  </h2>
+
+  <h3
+    style={{
+      fontSize: "34px",
+      marginBottom: "45px",
+    }}
+  >
+    OF 1,000,000 🌎
+  </h3>
+
+  <p
+    style={{
+      fontSize: "28px",
+      marginBottom: "20px",
+    }}
+  >
+    I claimed my $1 spot.
+  </p>
+
+  <p
+    style={{
+      fontSize: "24px",
+      opacity: "0.75",
+      marginBottom: "60px",
+    }}
+  >
+    Can we reach one million people?
+  </p>
+
+  <div
+    style={{
+      border: "1px solid rgba(255,255,255,0.3)",
+      borderRadius: "50px",
+      padding: "18px 30px",
+      fontSize: "20px",
+      letterSpacing: "2px",
+    }}
+  >
+    JOIN THE EXPERIMENT
+  </div>
+</div>
+
+
 
   <div
     style={{
@@ -320,6 +424,18 @@ const shareCardImage = async () => {
   >
     DOWNLOAD CARD
   </button>
+<button
+  onClick={downloadStoryCard}
+  style={{
+    padding: "14px 24px",
+    borderRadius: "30px",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "700",
+  }}
+>
+  DOWNLOAD STORY CARD
+</button>
 </div>
         <p
           style={{
