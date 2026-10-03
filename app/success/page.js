@@ -11,8 +11,8 @@ const shareUrl =
   typeof window !== "undefined" ? window.location.origin : "";
 
 const shareText = spotNumber
-  ? `I'm #${spotNumber} of 1,000,000. Join the One Million experiment!`
-  : "Join the One Million experiment!";
+  ? `I'm #${spotNumber} of 1,000,000 🌎 I claimed my $1 spot in the One Million experiment. Can we reach one million people?`
+  : "Join the One Million experiment 🌎";
 
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
@@ -105,6 +105,55 @@ if (data.spotNumber) {
     }}
   >
     SHARE YOUR SPOT
+<div
+  style={{
+    width: "min(520px, 90vw)",
+    padding: "35px 25px",
+    marginBottom: "25px",
+    border: "1px solid rgba(255,255,255,0.25)",
+    borderRadius: "24px",
+    background: "rgba(255,255,255,0.05)",
+    textAlign: "center",
+  }}
+>
+  <p
+    style={{
+      fontSize: "12px",
+      letterSpacing: "4px",
+      opacity: "0.7",
+      marginBottom: "20px",
+    }}
+  >
+    ONE MILLION
+  </p>
+
+  <h2
+    style={{
+      fontSize: "36px",
+      marginBottom: "15px",
+    }}
+  >
+    I&apos;M #{spotNumber} OF 1,000,000 🌎
+  </h2>
+
+  <p
+    style={{
+      fontSize: "18px",
+      marginBottom: "10px",
+    }}
+  >
+    I claimed my $1 spot.
+  </p>
+
+  <p
+    style={{
+      fontSize: "15px",
+      opacity: "0.7",
+    }}
+  >
+    Can we reach one million people?
+  </p>
+</div>
   </p>
 
   <div
