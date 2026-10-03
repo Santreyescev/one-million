@@ -1,11 +1,12 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
  function SuccessContent() {
   const searchParams = useSearchParams();
 const [spotNumber, setSpotNumber] = useState(null);
+const shareCardRef = useRef(null);
 
 const shareUrl =
   typeof window !== "undefined" ? window.location.origin : "";
@@ -43,6 +44,56 @@ if (data.spotNumber) {
 
     confirmPayment();
   }, [searchParams]);
+const downloadShareCard = async () => {
+  if (!shareCardRef.current) return;
+
+  const html2canvas = (await import("html2canvas")).default;
+
+  const canvas = await html2canvas(shareCardRef.current, {
+    backgroundColor: "#080808",
+    scale: 2,
+  });
+
+  const link = document.createElement("a");
+  link.download = `one-million-spot-${spotNumber}.png`;
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+};
+
+const shareCardImage = async () => {
+  if (!shareCardRef.current) return;
+
+  const html2canvas = (await import("html2canvas")).default;
+
+  const canvas = await html2canvas(shareCardRef.current, {
+    backgroundColor: "#080808",
+    scale: 2,
+  });
+
+  canvas.toBlob(async (blob) => {
+    if (!blob) return;
+
+    const file = new File(
+      [blob],
+      `one-million-spot-${spotNumber}.png`,
+      { type: "image/png" }
+    );
+
+    if (
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({ files: [file] })
+    ) {
+      await navigator.share({
+        title: "One Million",
+        text: shareText,
+        files: [file],
+      });
+    } else {
+      downloadShareCard();
+    }
+  }, "image/png");
+};
 
   return (
     <main
@@ -106,6 +157,7 @@ if (data.spotNumber) {
   >
     SHARE YOUR SPOT
 <div
+  ref={shareCardRef}
   style={{
     width: "min(520px, 90vw)",
     padding: "35px 25px",
@@ -234,7 +286,41 @@ if (data.spotNumber) {
     </button>
   </div>
 </div>
+<div
+  style={{
+    display: "flex",
+    gap: "12px",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    marginTop: "18px",
+  }}
+>
+  <button
+    onClick={shareCardImage}
+    style={{
+      padding: "14px 24px",
+      borderRadius: "30px",
+      border: "none",
+      cursor: "pointer",
+      fontWeight: "700",
+    }}
+  >
+    SHARE IMAGE
+  </button>
 
+  <button
+    onClick={downloadShareCard}
+    style={{
+      padding: "14px 24px",
+      borderRadius: "30px",
+      border: "none",
+      cursor: "pointer",
+      fontWeight: "700",
+    }}
+  >
+    DOWNLOAD CARD
+  </button>
+</div>
         <p
           style={{
             fontSize: "17px",
