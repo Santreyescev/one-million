@@ -7,6 +7,13 @@ import { useSearchParams } from "next/navigation";
   const searchParams = useSearchParams();
 const [spotNumber, setSpotNumber] = useState(null);
 
+const shareUrl =
+  typeof window !== "undefined" ? window.location.origin : "";
+
+const shareText = spotNumber
+  ? `I'm #${spotNumber} of 1,000,000. Join the One Million experiment!`
+  : "Join the One Million experiment!";
+
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
 
@@ -81,6 +88,103 @@ if (data.spotNumber) {
   ? `Your spot is #${spotNumber}.`
   : "Confirming your spot..."}
         </p>
+<div
+  style={{
+    marginTop: "30px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    alignItems: "center",
+  }}
+>
+  <p
+    style={{
+      fontSize: "14px",
+      letterSpacing: "2px",
+      opacity: "0.6",
+    }}
+  >
+    SHARE YOUR SPOT
+  </p>
+
+  <div
+    style={{
+      display: "flex",
+      gap: "10px",
+      flexWrap: "wrap",
+      justifyContent: "center",
+    }}
+  >
+    <a
+      href={`https://wa.me/?text=${encodeURIComponent(
+        `${shareText} ${shareUrl}`
+      )}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        padding: "12px 18px",
+        borderRadius: "30px",
+        background: "#fff",
+        color: "#111",
+        textDecoration: "none",
+        fontWeight: "700",
+      }}
+    >
+      WhatsApp
+    </a>
+
+    <a
+      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        shareText
+      )}&url=${encodeURIComponent(shareUrl)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        padding: "12px 18px",
+        borderRadius: "30px",
+        background: "#fff",
+        color: "#111",
+        textDecoration: "none",
+        fontWeight: "700",
+      }}
+    >
+      X
+    </a>
+
+    <a
+      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        shareUrl
+      )}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        padding: "12px 18px",
+        borderRadius: "30px",
+        background: "#fff",
+        color: "#111",
+        textDecoration: "none",
+        fontWeight: "700",
+      }}
+    >
+      Facebook
+    </a>
+
+    <button
+      onClick={() => navigator.clipboard.writeText(shareUrl)}
+      style={{
+        padding: "12px 18px",
+        borderRadius: "30px",
+        border: "none",
+        background: "#fff",
+        color: "#111",
+        fontWeight: "700",
+        cursor: "pointer",
+      }}
+    >
+      Copy Link
+    </button>
+  </div>
+</div>
 
         <p
           style={{
