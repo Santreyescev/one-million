@@ -72,7 +72,30 @@ export default function Home() {
     padding: "0 20px",
   }}
 >
-  Can one million people around the world come together, one dollar at a time?
+  Can one million people around the world come together, one dollar at a time, to help people in need?
+</p>
+<p
+  style={{
+    margin: "14px auto 8px",
+    fontSize: "16px",
+    lineHeight: "1.5",
+    fontWeight: "600",
+  }}
+>
+  Claim your $1 spot and be part of something bigger.
+</p>
+
+<p
+  style={{
+    maxWidth: "650px",
+    margin: "8px auto 24px",
+    fontSize: "13px",
+    lineHeight: "1.5",
+    opacity: "0.7",
+    padding: "0 20px",
+  }}
+>
+  Funds are intended to support people in need. We’ll clearly share how contributions are used and distributed.
 </p>
 
         <form action="/api/checkout" method="POST">
