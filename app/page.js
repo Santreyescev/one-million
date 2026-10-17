@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import backgroundImage from "./one-million-background.png";
 
 export default function Home() {
   const [joined, setJoined] = useState(0);
@@ -20,18 +21,26 @@ export default function Home() {
   }, []);
   return (
     <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        background: "#080808",
-        color: "white",
-        padding: "20px",
-      }}
-    >
-      <div>
+  style={{
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    color: "white",
+    padding: "20px",
+    position: "relative",
+   background: `linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.45)), url(${backgroundImage.src}) center / cover no-repeat`,
+  }}
+>
+      <div
+  style={{
+    position: "relative",
+    zIndex: 1,
+    width: "100%",
+    maxWidth: "1000px",
+  }}
+>
         <p
           style={{
             letterSpacing: "6px",
